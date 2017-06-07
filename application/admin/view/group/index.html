@@ -1,0 +1,119 @@
+{include file="public:header"/}
+<section class="Hui-article-box">
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页 
+        <span class="c-gray en">&gt;</span> 管理员管理 
+        <span class="c-gray en">&gt;</span> 角色管理 
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="cl pd-5 bg-1 bk-gray"> 
+                <span class="l"> 
+                    <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
+                        <i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> 
+                    <a class="btn btn-primary radius" href="javascript:;" onclick="group_add('添加分组','{:url('group/add')}')">
+                        <i class="Hui-iconfont">&#xe600;</i> 添加</a> 
+                </span> 
+                <span class="r">共有数据：<strong>54</strong> 条</span> 
+            </div>
+            <div class="mt-10">
+                <table class="table table-border table-bordered table-hover table-bg">
+                    <thead>
+                        <tr>
+                            <th scope="col" colspan="6">角色管理</th>
+                        </tr>
+                        <tr class="text-c">
+                            <th width="25">
+                                <input type="checkbox" value="" name="">
+                            </th>
+                            <th width="40">ID</th>
+                            <th>角色组名称</th>
+                            <th>权限</th>
+                            <th>状态</th>
+                            <th width="70">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {volist name="groups" id="vo"}
+                        <tr class="text-c">
+                            <td><input type="checkbox" value="" name=""></td>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.title}</td>
+                            <td><a onclick="give_rules('分配组权限','{:url('group/giveRules',array('id'=>$vo.id))}')">编辑</a></td>
+                            <td>{$vo.status}</td>
+                            <td class="f-14">
+                                <a title="编辑" href="javascript:;" onclick="rule_edit('角色编辑','{:url('role/edit',array('id'=>5))}','1')" style="text-decoration:none">
+                                    <i class="Hui-iconfont">&#xe6df;</i>
+                                </a> 
+                                <a title="删除" href="javascript:;" onclick="group_delete('{:url('group/delete')}','{$vo.id}')" class="ml-5" style="text-decoration:none">
+                                    <i class="Hui-iconfont">&#xe6e2;</i>
+                                </a>
+                            </td>
+                        </tr>
+                        {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </div>
+</section>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__LIB__/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="__LIB__/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__LIB__/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+/*规则-添加*/
+function group_add(title, url) {
+    layer.open({
+        type: 2,
+        title: title,
+        shadeClose: false,
+        maxmin: true,
+        area:['60%','50%'],
+        content: url
+    });
+}
+/*规则-编辑*/
+function group_edit(title, url) {
+    layer.open({
+        type: 2,
+        title: title,
+        shadeClose: false,
+        maxmin: true,
+        area:['60%','40%'],
+        content: url
+    });
+}
+/*规则-删除*/
+function group_delete(url, id) {
+    layer.confirm('确认删除吗？', function(res) {
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: {id:id},
+            success: function(res){
+                if(res.errno==1){
+                    layer.msg(res.msg,{time:1000},function(){
+                        window.parent.location.reload();
+                    });
+                }else{
+                    layer.msg(res.msg,{time:1500});
+                }
+            } 
+        });
+    });
+}
+function give_rules(title, url) {
+    layer.open({
+        type: 2,
+        title: title,
+        shadeClose: false,
+        maxmin: true,
+        area:['70%','90%'],
+        content: url
+    });
+}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+{include file="public:footer"/}

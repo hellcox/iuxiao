@@ -10,3 +10,13 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+
+/**
+ * 密码加密
+ * @param  [type] $password [description]
+ * @return [type]           [description]
+ */
+function get_password($password)
+{
+	return md5('doudou'.$password.'ser');
+}

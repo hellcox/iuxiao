@@ -1,0 +1,56 @@
+{include file="public:a_header"/}
+<article class="cl pd-20">
+    <div class="form form-horizontal" id="form-member-add">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" id="user_name" name="user_name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>密码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" id="password" name="password">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" id="rpassword" name="rpassword">
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" onclick="rule_add('{:url('user/add')}')" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </div>
+</article>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__LIB__/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="__LIB__/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__LIB__/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__LIB__/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+function rule_add(url) {
+    var user_name = $("#user_name").val();
+    var password = $("#password").val();
+    var rpassword = $("#rpassword").val();
+    $.ajax({
+    	type: 'post',
+    	url: url,
+    	data: {user_name:user_name,password:password,rpassword:rpassword},
+    	success: function(res){
+    		if(res.errno==1){
+    			layer.msg(res.msg,{time:1000},function(){
+	    			window.parent.location.reload();
+	    		});
+    		}else{
+    			layer.msg(res.msg,{time:1500});
+    		}
+    	} 
+    });
+}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+{include file="public:footer"/}

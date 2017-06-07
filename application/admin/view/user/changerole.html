@@ -1,0 +1,54 @@
+{include file="public:a_header"/}
+<article class="cl pd-20">
+    <div class="form form-horizontal" id="form-member-add">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text disabled" readonly value="{$user.user_name}" id="user_name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box">
+                  <select class="select selector" size="1" id="roleID" name="roleID">
+                    {volist name="roles" id="vo"}
+                    <option value="{$vo.id}">{$vo.title}</option>
+                    {/volist}
+                  </select>
+                </span>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input type="hidden" name="userID" id="userID" value="{$user.id}">
+                <input class="btn btn-primary radius" onclick="rule_add('{:url('user/changeRole')}')" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </div>
+</article>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+function rule_add(url) {
+    var user_id = $("#userID").val();
+    var role_id = $("#roleID").val();
+    $.ajax({
+    	type: 'post',
+    	url: url,
+    	data: {user_id:user_id,role_id:role_id},
+    	success: function(res){
+    		if(res.errno==1){
+    			layer.msg(res.msg,{time:1000},function(){
+	    			window.parent.location.reload();
+	    		});
+    		}else{
+    			layer.msg(res.msg,{time:1500});
+    		}
+    	} 
+    });
+}
+// select 选中
+$(".selector").val("{$role.id}");
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+{include file="public:footer"/}

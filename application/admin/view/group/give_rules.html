@@ -1,0 +1,115 @@
+<!-- 作为弹窗公共头文件 -->
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="favicon.ico">
+    <link rel="Shortcut Icon" href="favicon.ico" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="__LIB__/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/h-ui.admin/css/style.css" />
+    <script type="text/javascript" src="__LIB__/jquery/3.2.1/jquery.min.js"></script>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <!--/meta 作为公共模版分离出去-->
+    <title>H-ui.admin v3.0</title>
+    <meta name="keywords" content="H-ui.admin v3.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
+    <meta name="description" content="H-ui.admin v3.0，是一款由国人开发的轻量级扁平化网站后台模板">
+</head>
+
+<body>
+    <article class="cl pd-20">
+        <form action="" method="post">
+            <div class="form form-horizontal" id="form-member-add">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3">角色名称：</label>
+                    <div class="formControls col-xs-7 col-sm-8 pd-5" style="padding-left: 15px;">{$role.title}</div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-3">角色权限：</label>
+                    <div class="formControls col-xs-7 col-sm-8">
+                        <dl class="permission-list">
+                            <dt>
+                                <label>
+                                    <!-- <input type="checkbox" value="" name="user-Character-0" id="user-Character-1" class="valid"> 用户中心 -->
+                                </label>
+                            </dt>
+                            <dd>
+                                <dl class="cl permission-list2">
+                                    <!-- <dt>
+                                <label class="">
+                                    <input type="checkbox" value="" name="user-Character-1-0" id="user-Character-1-0"> 用户管理
+                                </label>
+                            </dt> -->
+                                    <dd style="margin-left: 0">
+                                        {volist name="rules" id="vo"} {php} $ck = ''; if(in_array($vo['id'],$role['rules'])){ $ck = 'checked'; } {/php}
+                                        <label class="" style="width: 130px;display: block;float: left;">
+                                            <input type="checkbox" value="{$vo.id}" name="rules[]" {php}echo $ck;{/php}> {$vo.title}
+                                        </label>
+                                        {/volist}
+                                    </dd>
+                                </dl>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </article>
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript">
+    function role_edit(url) {
+        var title = $("#title").val();
+        var id = $("#roleID").val();
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: {
+                title: title,
+                id: id
+            },
+            success: function(res) {
+                if (res.errno == 1) {
+                    layer.msg(res.msg, {
+                        time: 1000
+                    }, function() {
+                        window.parent.location.reload();
+                    });
+                } else {
+                    layer.msg(res.msg, {
+                        time: 1500
+                    });
+                }
+            }
+        });
+    }
+    </script>
+    <!--/请在上方写此页面业务相关的脚本-->
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="__LIB__/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="__LIB__/layer/3.0.3/layer.js"></script>
+    <script type="text/javascript" src="__STATIC__/h-ui/js/H-ui.js"></script>
+    <script type="text/javascript" src="__STATIC__/h-ui.admin/js/H-ui.admin.page.js"></script>
+    <!--/_footer /作为公共模版分离出去-->
+</body>
+
+</html>
