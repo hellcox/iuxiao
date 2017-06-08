@@ -12,7 +12,7 @@
                 <span class="l"> 
                     <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
                         <i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> 
-                    <a class="btn btn-primary radius" href="javascript:;" onclick="group_add('添加分组','{:url('group/add')}')">
+                    <a class="btn btn-primary radius" href="javascript:;" onclick="article_add('添加文章','{:url('article/add')}')">
                         <i class="Hui-iconfont">&#xe600;</i> 添加</a> 
                 </span> 
                 <span class="r">共有数据：<strong>54</strong> 条</span> 
@@ -29,7 +29,9 @@
                             </th>
                             <th width="40">ID</th>
                             <th>文章名称</th>
+                            <th>封面</th>
                             <th>发布时间</th>
+                            <th>更新时间</th>
                             <th>状态</th>
                             <th width="70">操作</th>
                         </tr>
@@ -40,13 +42,19 @@
                             <td><input type="checkbox" value="" name=""></td>
                             <td>{$vo.id}</td>
                             <td>{$vo.title}</td>
+                            <td>
+                                {neq name="$vo.cover" value=""}
+                                <a href="{$vo.cover}" target="_blank">查看</a>
+                                {/neq}
+                            </td>
                             <td>{$vo.create_time|date='Y-m-d H:i',###}</td>
+                            <td>{$vo.update_time|date='Y-m-d H:i',###}</td>
                             <td>{$vo.status}</td>
                             <td class="f-14">
-                                <a title="编辑" href="javascript:;" onclick="rule_edit('角色编辑','{:url('role/edit',array('id'=>5))}','1')" style="text-decoration:none">
+                                <a title="编辑" href="javascript:;" onclick="article_edit('编辑','{:url('article/edit',array('id'=>$vo['id']))}','1')" style="text-decoration:none">
                                     <i class="Hui-iconfont">&#xe6df;</i>
                                 </a> 
-                                <a title="删除" href="javascript:;" onclick="group_delete('{:url('group/delete')}','{$vo.id}')" class="ml-5" style="text-decoration:none">
+                                <a title="删除" href="javascript:;" onclick="article_delete('{:url('article/delete')}','{$vo.id}')" class="ml-5" style="text-decoration:none">
                                     <i class="Hui-iconfont">&#xe6e2;</i>
                                 </a>
                             </td>
@@ -59,34 +67,31 @@
     </div>
 </section>
 <!--请在下方写此页面业务相关的脚本-->
-<script type="text/javascript" src="__LIB__/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript" src="__LIB__/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="__LIB__/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
-/*规则-添加*/
-function group_add(title, url) {
+/*文章-添加*/
+function article_add(title, url) {
     layer.open({
         type: 2,
         title: title,
         shadeClose: false,
         maxmin: true,
-        area:['60%','50%'],
+        area:['82%','90%'],
         content: url
     });
 }
 /*规则-编辑*/
-function group_edit(title, url) {
+function article_edit(title, url) {
     layer.open({
         type: 2,
         title: title,
         shadeClose: false,
         maxmin: true,
-        area:['60%','40%'],
+        area:['82%','90%'],
         content: url
     });
 }
 /*规则-删除*/
-function group_delete(url, id) {
+function article_delete(url, id) {
     layer.confirm('确认删除吗？', function(res) {
         $.ajax({
             type: 'post',
@@ -94,24 +99,14 @@ function group_delete(url, id) {
             data: {id:id},
             success: function(res){
                 if(res.errno==1){
-                    layer.msg(res.message,{time:1000},function(){
+                    layer.msg(res.msg,{time:1000},function(){
                         window.parent.location.reload();
                     });
                 }else{
-                    layer.msg(res.message,{time:1500});
+                    layer.msg(res.msg,{time:1500});
                 }
             } 
         });
-    });
-}
-function give_rules(title, url) {
-    layer.open({
-        type: 2,
-        title: title,
-        shadeClose: false,
-        maxmin: true,
-        area:['70%','90%'],
-        content: url
     });
 }
 </script>
