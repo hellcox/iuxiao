@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="./favicon.ico">
+    <title>iupages</title>
+    <!-- Bootstrap core CSS -->
+    <link href="__LIB__/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="__LIB__/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- 自定义样式 -->
+    <link href="__CSS__/style.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/" style="color:#fff">IUXIAO</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="/">首页</a></li>
+                    <li><a href="{:url('Index/sort','category=1')}">互联网</a></li>
+                    <li><a href="{:url('Index/sort','category=2')}">技术技巧</a></li>
+                    <!-- <li><a href="#">碎言碎语</a></li> -->
+                    <!-- <li><a href="#">留言本</a></li> -->
+                </ul>
+                <form action="{:url('Index/search')}" method="get" class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" placeholder="Search" name="key" class="form-control">
+                        <input type="submit" value="搜 索" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <!--/.navbar-collapse -->
+        </div>
+    </nav>

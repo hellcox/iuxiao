@@ -248,4 +248,5 @@ return [
         'auth_rule'         => 'auth_rule', // 权限规则表
         'auth_user'         => 'user', // 用户信息表
     ],
+
 ];

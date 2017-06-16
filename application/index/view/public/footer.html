@@ -1,0 +1,39 @@
+    <!-- /container -->
+    
+    <div class="totop hand" style="display: none">
+        <h1 class="t14 mg-0" style="line-height: 40px;">TOP</h1>
+    </div>
+
+    <footer class="footer cbbb">
+        <div class="container">
+            <div class="row mgtb-15" align="center">
+                <div class="col-sm-12">
+                    <span>豆笑笑</span>
+                    <span>网站地图</span>
+                    <span>蜀ICP备15015379号</span>
+                </div>
+                <div class="col-sm-12 mgt-15">
+                    <span>Copyright 2016-2017 . IUXIAO个人博客 . 基于PHP BootStrap</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- JavaScript -->
+    <script src="__JS__/jquery-3.2.1.min.js"></script>
+    <script src="__LIB__/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 200)
+                $('.totop').show();
+            else
+                $('.totop').hide();
+        });
+        $('.totop').click(function() {
+            $('html, body').animate({scrollTop: 0}, 1000);
+        });
+    });
+    </script>
+</body>
+
+</html>

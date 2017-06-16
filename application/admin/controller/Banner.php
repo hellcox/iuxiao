@@ -4,13 +4,14 @@ namespace app\admin\controller;
 use think\Db;
 use think\Request;
 
-class Article extends Base
+class Banner extends Base
 {
     public function index()
     {
-        $articles = model('article')->page_list(8);
 
-        $this->assign('articles', $articles);
+        $banners = model('banner')->page_list(8,2);
+
+        $this->assign('banners', $banners);
 
         return view();
     }
@@ -23,27 +24,24 @@ class Article extends Base
 
             $data = [
                 'title'       => $input['title'],
-                'keywords'    => $input['keywords'],
-                'desc'        => $input['desc'],
+                'article_id'  => $input['articleID'],
                 'status'      => $input['status'],
-                'type'        => $input['type'],
-                'tags'        => $input['tags'],
-                'content'     => $input['content'],
+                'url'         => $input['url'],
                 'create_time' => time(),
                 'update_time' => time(),
             ];
 
             // 上传表单图片
-            $file = request()->file('cover');
+            $file = request()->file('image');
             if ($file) {
                 $imgPath = ROOT_PATH . 'public/upload/image';
                 $info    = $file->move($imgPath);
                 if ($info) {
-                    $data['cover'] = '/upload/image/' . str_replace('\\', '/', $info->getSavename());
+                    $data['image'] = '/upload/image/' . str_replace('\\', '/', $info->getSavename());
                 }
             }
 
-            if (Db::table('article')->insert($data)) {
+            if (Db::table('banner')->insert($data)) {
                 $this->success('添加成功', '', '', 1);
             }
         }
@@ -60,7 +58,7 @@ class Article extends Base
                 $res = ['errno' => 0, 'msg' => '参数错误'];
                 return $res;
             }
-            if (Db::table('article')->delete($id)) {
+            if (Db::table('banner')->delete($id)) {
                 $res = ['errno' => 1, 'msg' => '删除成功'];
                 return $res;
             }
@@ -72,40 +70,39 @@ class Article extends Base
     public function edit()
     {
         $id = input('param.id');
-        $article = Db::table('article')->find($id);
-        $this->assign('article',$article);
 
         if (Request::instance()->isPost()) {
+            $bannerID = input('post.bannerID');
             $input            = input('post.');
-            $input['content'] = input('post.content', '', null);
-
             $data = [
                 'title'       => $input['title'],
-                'keywords'    => $input['keywords'],
-                'desc'        => $input['desc'],
+                'article_id'  => $input['articleID'],
                 'status'      => $input['status'],
-                'type'        => $input['type'],
-                'tags'        => $input['tags'],
-                'content'     => $input['content'],
+                'url'         => $input['url'],
             ];
 
+
             // 上传表单图片
-            $file = request()->file('cover');
+            $file = request()->file('image');
             if ($file) {
                 $imgPath = ROOT_PATH . 'public/upload/image';
                 $info    = $file->move($imgPath);
                 if ($info) {
-                    $data['cover'] = '/upload/image/' . str_replace('\\', '/', $info->getSavename());
+                    $data['image'] = '/upload/image/' . str_replace('\\', '/', $info->getSavename());
                 }
             }
-
-            if (Db::table('article')->where('id',$id)->update($data)) {
-                Db::table('article')->where('id',$id)->update(['update_time'=>time()]);
+            dump($data);
+            dump($bannerID);
+            if (Db::table('banner')->where('id',$bannerID)->update($data)) {
+                Db::table('banner')->where('id',$bannerID)->update(['update_time'=>time()]);
                 $this->success('修改成功', '', '', 1);
             }else {
                 $this->error('修改失败', '', '', 1);
             }
         }
+
+        $banner = Db::table('banner')->find($id);
+        $this->assign('banner',$banner);
 
         return view();
     }

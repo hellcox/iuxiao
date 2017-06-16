@@ -1,0 +1,115 @@
+{include file="public:header"/}
+<div class="container theme-showcase" role="main">
+    <div class="row">
+        <!-- left -->
+        <div class="col-sm-8 col-xs-12 left">
+            <!-- 文章详情 -->
+            <div class="detail panel panel-default">
+                <div class="panel-heading" style="background: #fff">
+                    <h1 class="panel-title t14">
+                            <span>你的位置：</span>
+                            <a href="/">个人博客</a> >
+                            <a href="">{$article.type}</a> >
+                            <span>{$article.title}</span>
+                        </h1>
+                </div>
+                <div class="panel-body">
+                    <div class="info">
+                        <div class="title">
+                            <h1 class="mg-0 t22">
+                                    <!-- <i class="glyphicon glyphicon-map-marker"></i>  -->
+                                    <span>{$article.title}</span>
+                                </h1>
+                        </div>
+                        <div class="aside c777 mgtb-10 t12">
+                            <i class="glyphicon glyphicon-user"></i><span class="author pdl-5">豆豆</span>
+                            <i class="pdl-20 glyphicon glyphicon-th-list"></i><span class="type pdl-5">{$article.type}</span>
+                            <i class="pdl-20 glyphicon glyphicon-eye-open"></i><span class="read pdl-5">浏览({$article.views})</span>
+                            <i class="pdl-20 glyphicon glyphicon-time"></i><span class="time pdl-5">{$article.update_time|date='Y-m-d',###}</span>
+                        </div>
+                        <div class="line"></div>
+                    </div>
+                    <!-- 这里是文章详情内容 -->
+                    <div class="content mgt-10" style="width: 100%;overflow: hidden;">
+                        {$article.content}
+                    </div>
+                    <!--文章详情内容结束 -->
+                </div>
+            </div>
+            <!-- end left -->
+        </div>
+        <!-- right -->
+        <div class="col-sm-4 col-xs-12 right">
+            <!-- 站长简介 -->
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background: #FBFBFB">
+                    <h3 class="panel-title">
+                        <i class="glyphicon glyphicon-menu-hamburger"></i>
+                        <span class="pdl-10">站长简介</span>
+                      </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="content" style="line-height: 25px;">
+                        <p>多年研发设计生产经验产品精美，质量过硬，厂家直销价格，最佳的性价比，最大化的利润空间。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- 热门文章 -->
+            <div class="hot panel panel-default">
+                <div class="panel-heading" style="background: #FBFBFB">
+                    <h3 class="panel-title">
+                        <i class="glyphicon glyphicon-menu-hamburger"></i>
+                        <span class="pdl-10">热门文章</span>
+                      </h3>
+                </div>
+                <div class="panel-body">
+                    {volist name='hotArticles' id='vo'}
+                    <div class="item">
+                        <div class="img col-sm-4 col-xs-4 pd-0">
+                            <img src="{$vo.cover}" alt="" width="100%">
+                        </div>
+                        <div class="content col-sm-8 col-xs-8 pd-0 pdl-15">
+                            <div class="a-title">
+                                <a href="">
+                                    <h1 class="mg-0 mgt-5 t14 blue2">{$vo.title}</h1>
+                                </a>
+                            </div>
+                            <div class="mgtb-5 c777 t10">
+                                <i class="glyphicon glyphicon-time"></i>
+                                <span> {$vo.create_time|date='Y-m-d',###}</span>
+                                <i class="glyphicon glyphicon-eye-open  pdl-10"></i>
+                                <span> {$vo.views}次浏览</span>
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+                </div>
+            </div>
+            <!-- 标签 -->
+            <!-- <div class="panel panel-default">
+                <div class="panel-heading" style="background: #FBFBFB">
+                    <h3 class="panel-title">
+                        <i class="glyphicon glyphicon-menu-hamburger"></i>
+                        <span class="pdl-10">标签</span>
+                      </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="content">
+                        <a href="">我是个标签</a>
+                        <a href="">我是个标签</a>
+                        <br>
+                        <a href="">我是个标签</a>
+                        <br>
+                        <a href="">我是个标签</a>
+                        <br>
+                        <a href="">我是个标签</a>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <!-- end right -->
+    </div>
+</div>
+<!-- /container -->
+{include file="public:footer"/}

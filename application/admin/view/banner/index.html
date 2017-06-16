@@ -12,7 +12,7 @@
                 <span class="l"> 
                     <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius">
                         <i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> 
-                    <a class="btn btn-primary radius" href="javascript:;" onclick="article_add('添加文章','{:url('article/add')}')">
+                    <a class="btn btn-primary radius" href="javascript:;" onclick="add('添加轮播','{:url('banner/add')}')">
                         <i class="Hui-iconfont">&#xe600;</i> 添加</a> 
                 </span> 
                 <span class="r">共有数据：<strong>54</strong> 条</span> 
@@ -21,7 +21,7 @@
                 <table class="table table-border table-bordered table-hover table-bg">
                     <thead>
                         <tr>
-                            <th scope="col" colspan="9">文章管理</th>
+                            <th scope="col" colspan="9">管理</th>
                         </tr>
                         <tr class="text-c">
                             <th width="25">
@@ -30,33 +30,35 @@
                             <th width="40">ID</th>
                             <th>文章名称</th>
                             <th>封面</th>
+                            <th>URL</th>
                             <th>发布时间</th>
                             <th>更新时间</th>
                             <th>状态</th>
-                            <th>推荐</th>
                             <th width="70">操作</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {volist name="articles" id="vo"}
+                        {volist name="banners" id="vo"}
                         <tr class="text-c">
                             <td><input type="checkbox" value="" name=""></td>
                             <td>{$vo.id}</td>
                             <td>{$vo.title}</td>
+                            <td><a href="{$vo.image}" target="_blank">查看</a></td>
                             <td>
-                                {neq name="$vo.cover" value=""}
-                                <a href="{$vo.cover}" target="_blank">查看</a>
-                                {/neq}
+                                {if condition="$vo['url']" value=""}
+                                    <a href="{$vo.url}" target="_blank">跳转</a>
+                                {else}
+                                    <a href="{:url('index/Index/detail',['id'=>$vo['article_id']])}" target="_blank">跳转</a>
+                                {/if}
                             </td>
                             <td>{$vo.create_time|date='Y-m-d H:i',###}</td>
                             <td>{$vo.update_time|date='Y-m-d H:i',###}</td>
                             <td>{$vo.status}</td>
-                            <td>{$vo.rec}</td>
                             <td class="f-14">
-                                <a title="编辑" href="javascript:;" onclick="article_edit('编辑','{:url('article/edit',array('id'=>$vo['id']))}','1')" style="text-decoration:none">
+                                <a title="编辑" href="javascript:;" onclick="edit('编辑','{:url('banner/edit',array('id'=>$vo['id']))}','1')" style="text-decoration:none">
                                     <i class="Hui-iconfont">&#xe6df;</i>
                                 </a> 
-                                <a title="删除" href="javascript:;" onclick="article_delete('{:url('article/delete')}','{$vo.id}')" class="ml-5" style="text-decoration:none">
+                                <a title="删除" href="javascript:;" onclick="del('{:url('banner/delete')}','{$vo.id}')" class="ml-5" style="text-decoration:none">
                                     <i class="Hui-iconfont">&#xe6e2;</i>
                                 </a>
                             </td>
@@ -65,7 +67,7 @@
                     </tbody>
                 </table>
                 <div class="page">
-                    {$articles->render()}
+                    {$banners->render()}
                 </div>
             </div>
         </article>
@@ -73,8 +75,8 @@
 </section>
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
-/*文章-添加*/
-function article_add(title, url) {
+/*轮播-添加*/
+function add(title, url) {
     layer.open({
         type: 2,
         title: title,
@@ -84,8 +86,8 @@ function article_add(title, url) {
         content: url
     });
 }
-/*规则-编辑*/
-function article_edit(title, url) {
+/*轮播-编辑*/
+function edit(title, url) {
     layer.open({
         type: 2,
         title: title,
@@ -96,7 +98,7 @@ function article_edit(title, url) {
     });
 }
 /*规则-删除*/
-function article_delete(url, id) {
+function del(url, id) {
     layer.confirm('确认删除吗？', function(res) {
         $.ajax({
             type: 'post',

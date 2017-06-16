@@ -80,12 +80,26 @@
                 <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>状态：</label>
                 <div class="formControls col-xs-8 col-sm-9 skin-minimal">
                     <div class="radio-box">
-                        <input name="status" type="radio" value="1" checked>
+                        <input name="status" type="radio" value="1" <?php if($article['status']==1)echo 'checked'?>>
                         <label for="sex-1">启用</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" value="0" name="status">
+                        <input type="radio" value="0" name="status" <?php if($article['status']==0)echo 'checked'?>>
                         <label for="sex-2">停用</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>推荐：</label>
+                <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                    <div class="radio-box">
+                        <input name="rec" type="radio" value="0" <?php if($article['rec']==0)echo 'checked'?>>
+                        <label for="sex-1">否</label>
+                    </div>
+                    <div class="radio-box">
+                        <input type="radio" value="1" name="rec" <?php if($article['rec']==1)echo 'checked'?>>
+                        <label for="sex-2">是</label>
                     </div>
                 </div>
             </div>
@@ -94,10 +108,10 @@
                 <label class="form-label col-xs-4 col-sm-3">分类：</label>
                 <div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
                 <select class="select" name="type" size="1">
-                    <option value="分类1">分类1</option>
-                    <option value="分类1">分类1</option>
-                    <option value="分类1">分类1</option>
-                    <option value="分类4">分类4</option>
+                    <option value="{$article.type}">{$article.type}</option>
+                    <option value="" disabled>————————</option>
+                    <option value="互联网">互联网</option>
+                    <option value="技术技巧">技术技巧</option>
                 </select>
                 </span> </div>
             </div>

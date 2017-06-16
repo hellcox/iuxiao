@@ -1,10 +1,119 @@
 <?php
 namespace app\index\controller;
 
-class Index
+use think\Controller;
+use think\Db;
+
+class Index extends Controller
 {
     public function index()
     {
-        return '<style type="text/css">*{ padding: 0; margin: 0; } .think_default_text{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p> ThinkPHP V5<br/><span style="font-size:30px">十年磨一剑 - 为API开发设计的高性能框架</span></p><span style="font-size:22px;">[ V5.0 版本由 <a href="http://www.qiniu.com" target="qiniu">七牛云</a> 独家赞助发布 ]</span></div><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_bd568ce7058a1091"></thinkad>';
+        // 最新发布
+        $newArticles = Db::table('article')
+            ->field('id,title,views,update_time,cover,type,desc')
+            ->where(['status'=>1])
+            ->order('id desc')
+            ->paginate(4);
+        $banners = Db::table('banner')
+            ->field('title,article_id,url,image')
+            ->order('id desc')
+            ->where(['status'=>1])
+            ->limit(3)
+            ->select();
+        // 热门文章
+        $hotArticles = model('article')->get_hot_articles(5);
+        // 推荐文章
+        $recArticles = model('article')->get_rec_articles(3);
+
+        $this->assign([
+                'newArticles' => $newArticles,
+                'hotArticles' => $hotArticles,
+                'recArticles' => $recArticles,
+                'banners'     => $banners,
+            ]);
+        return view();
+    }
+
+    public function sort()
+    {
+        $category = input('param.category');
+        switch ($category) {
+            case '1':
+                $nav = '互联网';
+                break;
+            case '2':
+                $nav = '技术技巧';
+                break;
+            
+            default:
+                $nav = '';
+                break;
+        }
+        // 栏目文章
+        $sortArticles = Db::name('article')
+            ->field('id,title,views,update_time,cover,type,desc')
+            ->where(['type'=>$nav,'status'=>1])
+            ->order('id desc')
+            ->paginate(4);
+        // 热门文章
+        $hotArticles = model('article')->get_hot_articles(5);
+        // 推荐文章
+        $recArticles  = model('article')->get_rec_articles(3);
+
+        $this->assign([
+                'recArticles'  => $recArticles,
+                'hotArticles'  => $hotArticles,
+                'sortArticles' => $sortArticles,
+                'nav'          => $nav,
+            ]);
+        return view();
+    }
+
+    public function detail()
+    {
+        $article = array();
+        $id      = input('param.id');
+
+        if($id){
+            Db::table('article')->where('id',$id)->setInc('views');
+            $article = Db::table('article')->find($id);
+        }
+        // 热门文章
+        $hotArticles = model('article')->get_hot_articles(5);
+
+        $this->assign('article',$article);
+        $this->assign('hotArticles',$hotArticles);
+
+        return view();
+    }
+
+    public function search()
+    {
+        $referer = $_SERVER['HTTP_REFERER'];
+        $key = input('get.key');
+        $pageParam = ['query' =>['key'=>$key]];
+
+        if(!$key){
+            $this->redirect($referer);
+        }
+        // 栏目文章
+        $searchArticles = Db::name('article')
+            ->field('id,title,views,update_time,cover,type,desc')
+            ->where(['status'=>1])
+            ->where('title','like','%'.$key.'%')
+            ->order('id desc')
+            ->paginate(4,false, $pageParam);
+        // 热门文章
+        $hotArticles = model('article')->get_hot_articles(5);
+        // 推荐文章
+        $recArticles  = model('article')->get_rec_articles(3);
+
+        $this->assign([
+                'recArticles'  => $recArticles,
+                'hotArticles'  => $hotArticles,
+                'searchArticles' => $searchArticles,
+                'key' => $key,
+            ]);
+        return view();
     }
 }

@@ -18,4 +18,10 @@ return [
         ':name' => ['index/hello', ['method' => 'post']],
     ],
 
+    '[internet]'     => [
+    	''		=> ['index/Index/sort?category=1'],
+        ':id'   => ['index/Index/sort?category=1', ['method' => 'get'], ['id' => '\d+']],
+        ':name' => ['index/Index/sort?category=1', ['method' => 'post']],
+    ],
+
 ];

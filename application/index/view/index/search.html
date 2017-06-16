@@ -1,0 +1,108 @@
+{include file="public:header"/}
+<div class="container theme-showcase" role="main">
+    <div class="row">
+        <!-- left -->
+        <div class="col-sm-8 col-xs-12">
+            
+            <!-- 搜索栏目 -->
+            <div class="panel panel-default new">
+                <div class="panel-heading" style="background: #fff;padding: 10px 5px">
+                    <div class="t16 pd-0 title">
+                        <strong><i class="glyphicon glyphicon-menu-hamburger green"></i></strong>
+                        <strong>搜索列表</strong>
+                    </div>
+                </div>
+                <div class="panel-body pd-0">
+                    {if condition='$searchArticles->total()==0'}
+                    <div class="item bg-gray">
+                        <div>未搜索到 <span class="blue2">"{$key}"</span> 相关文章！</div>
+                    </div>
+                    {/if}
+                    {volist name='searchArticles' id='vo'}
+                    <div class="item bg-gray">
+                        <div class="col-sm-3 col-xs-4 pd-0">
+                            <a href="{:url('index/detail',['id'=>$vo['id']])}">
+                                <img src="{$vo.cover}" alt="" width="100%">
+                            </a>
+                        </div>
+                        <div class="col-sm-9 col-xs-8 pd-0 pdl-20">
+                            <div class="a-title">
+                                <a href="{:url('index/detail',['id'=>$vo['id']])}">
+                                    <h1 class="mg-0 mgt-5 t20 blue2">{$vo.title}</h1>
+                                </a>
+                            </div>
+                            <div class="mgtb-8 c777 t10">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span><a class="bule2">{$vo.type}</a></span>
+                                <i class="glyphicon glyphicon-eye-open pdl-10"></i>
+                                <span> {$vo.views}次浏览</span>
+                                <i class="glyphicon glyphicon-time pdl-10"></i>
+                                <span> {$vo.update_time|date='Y-m-d',###}</span>
+                            </div>
+                            <div class="c666 desc">{$vo.desc}</div>
+                        </div>
+                    </div>
+                    {/volist}
+                    <div class="page" align="center">
+                        {$searchArticles->render()}
+                    </div>
+                </div>
+            </div>
+            <!-- end left -->
+        </div>
+        <!-- right -->
+        <div class="col-sm-4 col-xs-12 right">
+            <!-- 热门文章 -->
+            <div class="hot panel panel-default">
+                <div class="panel-heading" style="background: #FBFBFB">
+                    <h3 class="panel-title">
+                        <i class="glyphicon glyphicon-menu-hamburger"></i>
+                        <span class="pdl-10">热门文章</span>
+                      </h3>
+                </div>
+                <div class="panel-body">
+                    {volist name='hotArticles' id='vo'}
+                    <div class="item">
+                        <div class="img col-sm-4 col-xs-4 pd-0">
+                            <a href="{:url('index/detail',['id'=>$vo['id']])}">
+                                <img src="{$vo.cover}" alt="" width="100%">
+                            </a>
+                        </div>
+                        <div class="content col-sm-8 col-xs-8 pd-0 pdl-15">
+                            <div class="a-title">
+                                <a href="{:url('index/detail',['id'=>$vo['id']])}">
+                                    <h1 class="mg-0 mgt-5 t14 blue2">{$vo.title}</h1>
+                                </a>
+                            </div>
+                            <div class="mgtb-5 c777 t10">
+                                <i class="glyphicon glyphicon-eye-open"></i>
+                                <span> {$vo.views}次浏览</span>
+                                <i class="glyphicon glyphicon-time pdl-10"></i>
+                                <span> {$vo.update_time|date='Y-m-d',###}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+                </div>
+            </div>
+            <!-- 标签 -->
+            <!-- <div class="panel panel-default">
+                <div class="panel-heading" style="background: #FBFBFB">
+                    <h3 class="panel-title">
+                        <i class="glyphicon glyphicon-menu-hamburger"></i>
+                        <span class="pdl-10">标签</span>
+                      </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="content">
+                        <a href="">我是个标签</a>
+                        <a href="">我是个标签</a>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <!-- end right -->
+    </div>
+</div>
+<!-- /container -->
+{include file="public:footer"/}
