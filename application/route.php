@@ -29,7 +29,7 @@ return [
 
     // 文章详情
     '[article]'     => [
-        ':id'   => ['index/Detail', ['method' => 'get'], ['id' => '\d+']],
+        ':id'   => ['index/detail', ['method' => 'get'], ['id' => '\d+']],
     ],
 
     // 搜索

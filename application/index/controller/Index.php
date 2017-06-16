@@ -11,12 +11,24 @@ class Index extends Controller
     public function _initialize()
     {
         $request = Request::instance();
-        $model = $request->module();
-        $controller = $request->controller();
         $action = $request->action();
-        dump($model);
-        dump($controller);
-        dump($action);
+
+        if($action=='sort'){
+            $category = input('param.category');
+            if($category==1){
+                $action = 'internet';
+            }elseif($category==2){
+                $action = 'technology';
+            }
+            $seo = config('seo.'.$action);
+            $this->assign('seo',$seo);
+        }elseif($action=='detail'){
+            return true;
+        }else{
+            $seo = config('seo.'.$action);
+            $this->assign('seo',$seo);
+        }
+
     }
     public function index()
     {
@@ -25,7 +37,7 @@ class Index extends Controller
             ->field('id,title,views,update_time,cover,type,desc')
             ->where(['status'=>1])
             ->order('id desc')
-            ->paginate(4);
+            ->paginate(6);
         $banners = Db::table('banner')
             ->field('title,article_id,url,image')
             ->order('id desc')
@@ -33,7 +45,7 @@ class Index extends Controller
             ->limit(3)
             ->select();
         // 热门文章
-        $hotArticles = model('article')->get_hot_articles(5);
+        $hotArticles = model('article')->get_hot_articles(8);
         // 推荐文章
         $recArticles = model('article')->get_rec_articles(3);
 
@@ -89,11 +101,19 @@ class Index extends Controller
         if($id){
             Db::table('article')->where('id',$id)->setInc('views');
             $article = Db::table('article')->find($id);
+            $seo = [
+                'title' => $article['title'].' - '.config('subtitle'),
+                'key' => $article['keywords'],
+                'desc' => $article['desc'],
+            ];
+        }else{
+            echo '参数错误';
         }
         // 热门文章
         $hotArticles = model('article')->get_hot_articles(5);
 
         $this->assign('article',$article);
+        $this->assign('seo',$seo);
         $this->assign('hotArticles',$hotArticles);
 
         return view();
