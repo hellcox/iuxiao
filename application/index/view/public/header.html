@@ -38,12 +38,12 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class=""><a href="/">首页</a></li>
-                    <li><a href="{:url('Index/sort','category=1')}">互联网</a></li>
-                    <li><a href="{:url('Index/sort','category=2')}">技术技巧</a></li>
+                    <li><a href="{:url('/internet')}">互联网</a></li>
+                    <li><a href="{:url('/technology')}">技术技巧</a></li>
                     <!-- <li><a href="#">碎言碎语</a></li> -->
                     <!-- <li><a href="#">留言本</a></li> -->
                 </ul>
-                <form action="{:url('Index/search')}" method="get" class="navbar-form navbar-right">
+                <form action="{:url('/search')}" method="get" class="navbar-form navbar-right">
                     <div class="form-group">
                         <input type="text" placeholder="Search" name="key" class="form-control">
                         <input type="submit" value="搜 索" class="form-control">

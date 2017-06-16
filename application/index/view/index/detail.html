@@ -67,11 +67,13 @@
                     {volist name='hotArticles' id='vo'}
                     <div class="item">
                         <div class="img col-sm-4 col-xs-4 pd-0">
+                            <a href="{:url('index/detail',['id'=>$vo['id']])}">
                             <img src="{$vo.cover}" alt="" width="100%">
+                            </a>
                         </div>
                         <div class="content col-sm-8 col-xs-8 pd-0 pdl-15">
                             <div class="a-title">
-                                <a href="">
+                                <a href="{:url('index/detail',['id'=>$vo['id']])}">
                                     <h1 class="mg-0 mgt-5 t14 blue2">{$vo.title}</h1>
                                 </a>
                             </div>

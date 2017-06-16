@@ -18,10 +18,24 @@ return [
         ':name' => ['index/hello', ['method' => 'post']],
     ],
 
+    // 导航页
     '[internet]'     => [
     	''		=> ['index/Index/sort?category=1'],
-        ':id'   => ['index/Index/sort?category=1', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['index/Index/sort?category=1', ['method' => 'post']],
+    ],
+
+    '[technology]'     => [
+        ''      => ['index/Index/sort?category=2'],
+    ],
+
+    // 文章详情
+    '[article]'     => [
+        ':id'   => ['index/Detail', ['method' => 'get'], ['id' => '\d+']],
+    ],
+
+    // 搜索
+    '[search]'     => [
+        ''      => ['index/Index/search'],
     ],
 
 ];
+

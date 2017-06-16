@@ -3,9 +3,21 @@ namespace app\index\controller;
 
 use think\Controller;
 use think\Db;
+use think\Request;
 
 class Index extends Controller
 {
+
+    public function _initialize()
+    {
+        $request = Request::instance();
+        $model = $request->module();
+        $controller = $request->controller();
+        $action = $request->action();
+        dump($model);
+        dump($controller);
+        dump($action);
+    }
     public function index()
     {
         // 最新发布
@@ -89,7 +101,12 @@ class Index extends Controller
 
     public function search()
     {
-        $referer = $_SERVER['HTTP_REFERER'];
+        if(isset($_SERVER['HTTP_REFERER'])){
+            $referer = $_SERVER['HTTP_REFERER'];
+        }else{
+            $referer = config('url');
+        }
+
         $key = input('get.key');
         $pageParam = ['query' =>['key'=>$key]];
 
